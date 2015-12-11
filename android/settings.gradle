@@ -1,0 +1,3 @@
+rootProject.name = 'Cloudy'
+
+include ':app'
