@@ -3,9 +3,25 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "react-native start"
+    "start": "react-native start",
+    "clean": "cd node_modules; find . -name .babelrc | grep -v packager | xargs rm -v"
   },
   "dependencies": {
-    "react-native": "^0.16.0"
+    "apsl-react-native-button": "^2.3.0",
+    "immutable": "^3.7.5",
+    "keymirror": "^0.1.1",
+    "react-native": "^0.16.0",
+    "react-redux": "^3.0.0",
+    "redux": "^3.0.4",
+    "redux-thunk": "^1.0.0",
+    "tcomb-form-native": "^0.3.2",
+    "underscore": "^1.8.3",
+    "validate.js": "^0.9.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^5.0.0-beta6",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.0.0",
+    "eslint-plugin-react": "^3.11.3"
   }
 }

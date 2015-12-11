@@ -1,0 +1,21 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "plugins": [
+    "react"
+  ],
+  "env": {
+    "es6": true,
+    "browser": false,
+    "node": true
+  },
+  "ecmaFeatures": {
+    "jsx": false,
+    "experimentalObjectRestSpread": true
+  },
+  "rules": {
+    "strict": 0,
+    "comma-dangle": [2, "never"],
+    "react/react-in-jsx-scope": 0
+  }
+}
