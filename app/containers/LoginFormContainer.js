@@ -1,5 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
+// @TODO: Switch to lodash
 import _ from 'underscore';
 import React, {
   Component,

@@ -1,4 +1,5 @@
 import validate from 'validate.js';
+// @TODO: Switch to lodash
 import _ from 'underscore';
 
 const emailConstraints = {

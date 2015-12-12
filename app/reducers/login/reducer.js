@@ -19,13 +19,12 @@ export default function loginReducer(state = initialState, action) {
       const { field, value } = action.payload;
       return handleFormFieldChange(state, field, value);
 
-    case loginTypes.FORM_REQUEST:
+    case loginTypes.REQUEST_LOGIN:
       return state.set('isFetching', true);
 
+    case loginTypes.LOGIN_SUCCESS:
+      return state.set('isFetching', false);
 
-      // case LOGIN_SUCCESS:
-      //   return state.setIn(['form', 'isFetching'], false);
-      //
       //
       // case LOGIN_FAILURE:
       //   return state.setIn(['form', 'isFetching'], false)

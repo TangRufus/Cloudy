@@ -1,3 +1,4 @@
+// @TODO: Switch to lodash
 import _ from 'underscore';
 
 function hasError(errors) {
