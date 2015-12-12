@@ -1,7 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
-// @TODO: Switch to lodash
-import _ from 'underscore';
+import _ from 'lodash';
 import React, {
   Component,
   PropTypes,
@@ -11,6 +10,7 @@ import t from 'tcomb-form-native';
 import * as loginActions from '../actions/loginActions';
 import OnChangeForm from '../components/OnChangeForm';
 import FormButton from '../components/FormButton';
+import ErrorAlert from '../components/ErrorAlert';
 
 function mapStateToProps(state) {
   return { form: state.login.form,
@@ -30,6 +30,7 @@ const formType = t.struct({
 export default class LoginFormContainer extends Component {
   static propTypes = {
     form: PropTypes.shape({
+      error: PropTypes.object,
       fields: PropTypes.shape({
         email: PropTypes.string.isRequired,
         emailHasError: PropTypes.bool.isRequired,
@@ -42,6 +43,11 @@ export default class LoginFormContainer extends Component {
     onFormFieldChange: PropTypes.func.isRequired,
     onFormSubmit: PropTypes.func.isRequired
   };
+
+  constructor(props) {
+    super(props);
+    this.errorAlert = new ErrorAlert();
+  }
 
   onChange(value) {
     if (!_.isUndefined(value.email)) {
@@ -60,6 +66,7 @@ export default class LoginFormContainer extends Component {
     const isFormEditable = !this.props.isFetching;
     const isButtonDisabled = !this.props.form.isValid || this.props.isFetching;
     const isButtonLoading = this.props.isFetching;
+    const { error } = this.props.form;
     const value = this.props.form.fields;
     const options = {
       auto: 'placeholders',
@@ -89,9 +96,12 @@ export default class LoginFormContainer extends Component {
     };
     const buttonText = 'Login';
 
+    this.errorAlert.checkError(error);
+
     return (
       <View>
         <OnChangeForm
+          error={error}
           formType={formType}
           options={options}
           value={value}

@@ -1,10 +1,12 @@
-import _ from 'lodash'
+import _ from 'lodash';
 import loginTypes from '../constants/loginTypes';
+import AlertableError from '../util/alertableError';
 
 export function onFormFieldChange(field, value) {
   return {
     type: loginTypes.ON_FORM_FIELD_CHANGE,
-    payload: { field: field, value: value }
+    field: field,
+    value: value
   };
 }
 
@@ -14,15 +16,17 @@ function requestLogin() {
   };
 }
 
-function loginSuccess(domainList) {
+function loginSuccess(zones) {
   return {
-    type: loginTypes.LOGIN_SUCCESS
+    type: loginTypes.LOGIN_SUCCESS,
+    zones: zones
   };
 }
 
 function loginFailure(error) {
   return {
-    type: loginTypes.LOGIN_FAILURE
+    type: loginTypes.LOGIN_FAILURE,
+    error: error
   };
 }
 
@@ -30,7 +34,8 @@ function handleLoginResponse(response) {
   if (response.status !== 200) {
     const DEFAULT_ERROR_MSG = 'Wrong email address and API key combination. Please try again.';
     const errorMsg = response.statusText || DEFAULT_ERROR_MSG;
-    return Promise.reject(new Error(errorMsg));
+    const error = new AlertableError(errorMsg);
+    return Promise.reject(error);
   }
 
   return response.json();
@@ -44,18 +49,17 @@ function handleApiResponse(responseJson) {
   return Promise.reject(new Error(responseJson.messages));
 }
 
-function getZoneName(zone) {
+function getZone(zone) {
   return zone.name;
 }
 
 function handleLoginSuccess(dispatch, result) {
-  const zoneList = _.map(result, getZoneName);
-  dispatch(loginSuccess(zoneList));
+  const zones = _.map(result, getZone);
+  dispatch(loginSuccess(zones));
 }
 
 function handleLoginFailure(dispatch, error) {
-  const errorMsg = error.message;
-  dispatch(loginFailure(errorMsg));
+  dispatch(loginFailure(error));
 }
 
 export function onFormSubmit() {

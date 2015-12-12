@@ -16,7 +16,7 @@ export default function loginReducer(state = initialState, action) {
 
   switch (action.type) {
     case loginTypes.ON_FORM_FIELD_CHANGE:
-      const { field, value } = action.payload;
+      const { field, value } = action;
       return handleFormFieldChange(state, field, value);
 
     case loginTypes.REQUEST_LOGIN:
@@ -25,10 +25,9 @@ export default function loginReducer(state = initialState, action) {
     case loginTypes.LOGIN_SUCCESS:
       return state.set('isFetching', false);
 
-      //
-      // case LOGIN_FAILURE:
-      //   return state.setIn(['form', 'isFetching'], false)
-      //     .setIn(['form', 'error'], action.payload);
+    case loginTypes.LOGIN_FAILURE:
+      return state.set('isFetching', false)
+                  .setIn(['form', 'error'], action.error);
     //
     //   case SET_STATE:
     //   var form = JSON.parse(action.payload).account.form;
