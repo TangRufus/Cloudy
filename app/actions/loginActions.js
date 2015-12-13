@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import axios from 'axios';
 import loginTypes from '../constants/loginTypes';
 import AlertableError from '../util/alertableError';
+import AxiosCloudflare from '../util/axiosCloudflare';
 
 export function onFormFieldChange(field, value) {
   return {
@@ -18,7 +18,6 @@ function formRequest() {
 }
 
 function formSuccess(zones) {
-  console.log('zones:', zones);
   return {
     type: loginTypes.FORM_SUCCESS,
     zones: zones
@@ -32,16 +31,12 @@ function formFailure(error) {
   };
 }
 
-function handleLoginResponse(response) {
-  return response.data.result;
-}
-
 function getZone(zone) {
   return zone.name;
 }
 
-function handleformSuccess(dispatch, result) {
-  const zones = _.map(result, getZone);
+function handleformSuccess(dispatch, response) {
+  const zones = _.map(response.data.result, getZone);
   dispatch(formSuccess(zones));
 }
 
@@ -58,18 +53,9 @@ export function onFormSubmit() {
 
     const state = getState();
     const { email, apiKey } = state.login.form.fields;
+    const axiosCloudflare = new AxiosCloudflare(email, apiKey);
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Auth-Key': apiKey,
-        'X-Auth-Email': email
-      }
-    };
-
-    // @TODO: Handle timeout
-    return axios.get('https://api.cloudflare.com/client/v4/zones', config)
-        .then(response => handleLoginResponse(response))
+    return axiosCloudflare.zones()
         .then(result => handleformSuccess(dispatch, result))
         .catch(error => handleformFailure(dispatch, error));
   };
