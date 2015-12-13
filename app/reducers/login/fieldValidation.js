@@ -1,6 +1,5 @@
 import validate from 'validate.js';
-// @TODO: Switch to lodash
-import _ from 'underscore';
+import _ from 'lodash';
 
 const emailConstraints = {
   from: {
@@ -21,27 +20,13 @@ export default function fieldValidation(state, field, value) {
 
   switch (field) {
     case ('email'):
-      const validEmail = _.isUndefined(validate({
-        from: value
-      },
-        emailConstraints));
-      if (validEmail) {
-        nextState = state.setIn(['form', 'fields', 'emailHasError'], false);
-      } else {
-        nextState = state.setIn(['form', 'fields', 'emailHasError'], true);
-      }
+      const validEmail = !_.isUndefined(validate({ from: value }, emailConstraints));
+      nextState = state.setIn(['form', 'fields', 'emailHasError'], validEmail);
       break;
 
     case ('apiKey'):
-      const validApiKey = _.isUndefined(validate({
-        apiKey: value
-      },
-        apiKeyConstraints));
-      if (validApiKey) {
-        nextState = state.setIn(['form', 'fields', 'apiKeyHasError'], false);
-      } else {
-        nextState = state.setIn(['form', 'fields', 'apiKeyHasError'], true);
-      }
+      const validApiKey = !_.isUndefined(validate({ apiKey: value }, apiKeyConstraints));
+      nextState = state.setIn(['form', 'fields', 'apiKeyHasError'], validApiKey);
       break;
 
     default:

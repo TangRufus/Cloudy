@@ -1,12 +1,11 @@
-// @TODO: Switch to lodash
-import _ from 'underscore';
+import _ from 'lodash';
 
 function hasError(errors) {
   return _.contains(errors, true);
 }
 
 function isFilled(answers) {
-  return !_.any(answers, _.isEmpty);
+  return !_.some(answers, _.isEmpty);
 }
 
 export default function loginFormValidation(state) {
