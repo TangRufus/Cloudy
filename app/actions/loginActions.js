@@ -35,8 +35,8 @@ function getZone(zone) {
   return zone.name;
 }
 
-function handleformSuccess(dispatch, response) {
-  const zones = _.map(response.data.result, getZone);
+function handleformSuccess(dispatch, result) {
+  const zones = _.map(result, getZone);
   dispatch(formSuccess(zones));
 }
 

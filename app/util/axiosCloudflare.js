@@ -1,7 +1,10 @@
 import axios from 'axios';
 
-export default class AxiosCloudflare {
+axios.interceptors.response.use(
+  (response) => { return response.data.result; }
+);
 
+export default class AxiosCloudflare {
   constructor(email, apiKey) {
     this.config = {
       baseURL: 'https://api.cloudflare.com/client/v4/',
