@@ -5,6 +5,8 @@ import React, {
 import { Router, Route } from 'react-native-router-flux';
 import Login from './Login';
 import Launch from './Launch';
+// @TODO: Remove before release
+import Blank from './Blank';
 
 const styles = StyleSheet.create({
   scene: {
@@ -18,12 +20,13 @@ export default class App extends Component {
     return (
       <Router hideNavBar>
         <Route initial name="launch" component={Launch} title="Launch"/>
-          <Route name="login">
-              <Router sceneStyle={styles.scene}>
-                  <Route name="loginModal" component={Login} title="Login"/>
-              </Router>
-          </Route>
-        </Router>
+        <Route name="blank" component={Blank} title="Blank"/>
+        <Route name="login">
+          <Router sceneStyle={styles.scene}>
+            <Route name="loginForm" component={Login} title="Login"/>
+          </Router>
+        </Route>
+      </Router>
     );
   }
 }

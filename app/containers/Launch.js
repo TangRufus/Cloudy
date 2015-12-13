@@ -21,6 +21,7 @@ export default class Launch extends Component {
     return (
       <View style={styles.container}>
         <Text>Launch page</Text>
+        <Button onPress={Actions.blank}>Go to Blank page</Button>
         <Button onPress={Actions.login}>Go to Login page</Button>
       </View>
     );
