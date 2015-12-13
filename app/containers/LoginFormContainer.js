@@ -98,6 +98,8 @@ export default class LoginFormContainer extends Component {
 
     this.errorAlert.checkError(error);
 
+    // @TODO: Show spiner in status bar if fetching
+
     return (
       <View>
         <OnChangeForm
