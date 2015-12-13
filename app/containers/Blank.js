@@ -4,6 +4,7 @@ import React, {
   View
 } from 'react-native';
 
+// @TODO: Remove before release
 export default class Blank extends Component {
   render() {
     return (

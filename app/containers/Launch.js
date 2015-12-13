@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   }
 });
 
+// @TODO: Add this loading scene
 export default class Launch extends Component {
   render() {
     return (
