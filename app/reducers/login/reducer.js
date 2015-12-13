@@ -20,7 +20,8 @@ export default function loginReducer(state = initialState, action) {
       return handleFormFieldChange(state, field, value);
 
     case loginTypes.FORM_REQUEST:
-      return state.set('isFetching', true);
+      return state.set('isFetching', true)
+                  .setIn(['form', 'error'], null);
 
     case loginTypes.FORM_SUCCESS:
       return state.set('isFetching', false);
