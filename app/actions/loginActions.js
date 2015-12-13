@@ -56,7 +56,7 @@ export function onFormSubmit() {
     const axiosCloudflare = new AxiosCloudflare(email, apiKey);
 
     return axiosCloudflare.zones()
-        .then(result => handleformSuccess(dispatch, result))
-        .catch(error => handleformFailure(dispatch, error));
+                          .then(result => handleformSuccess(dispatch, result))
+                          .catch(error => handleformFailure(dispatch, error));
   };
 }
