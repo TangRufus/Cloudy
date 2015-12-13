@@ -2,8 +2,7 @@ import { connect } from 'react-redux/native';
 import LoginFormContainer from '../containers/LoginFormContainer';
 import React, {
   Component,
-  PropTypes,
-  View
+  PropTypes
 } from 'react-native';
 
 function mapStateToProps(state) {
@@ -17,9 +16,7 @@ class Login extends Component {
 
   render() {
     return (
-      <View>
-        <LoginFormContainer />
-      </View>
+      <LoginFormContainer />
     );
   }
 }

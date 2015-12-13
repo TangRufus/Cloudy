@@ -2,11 +2,11 @@ import keyMirror from 'keyMirror';
 
 const loginTypes = keyMirror({
   FILLING_FORM: null,
-  ON_FORM_FIELD_CHANGE: null,
+  FORM_FIELD_CHANGE: null,
 
-  REQUEST_LOGIN: null,
-  LOGIN_SUCCESS: null,
-  LOGIN_FAILURE: null
+  FORM_REQUEST: null,
+  FORM_SUCCESS: null,
+  FORM_FAILURE: null
 });
 
 export default loginTypes;

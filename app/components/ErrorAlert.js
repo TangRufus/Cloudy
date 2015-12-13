@@ -21,7 +21,7 @@ export default class ErrorAlert {
   }
 
   checkError(obj) {
-    // Early quit if no error
+    // Early quit if no error object
     if (_.isUndefined(obj) || _.isNull(obj)) {
       return;
     }

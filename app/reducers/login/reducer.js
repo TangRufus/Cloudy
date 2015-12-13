@@ -15,36 +15,19 @@ export default function loginReducer(state = initialState, action) {
   if (!(state instanceof InitialState)) return initialState.mergeDeep(state);
 
   switch (action.type) {
-    case loginTypes.ON_FORM_FIELD_CHANGE:
+    case loginTypes.FORM_FIELD_CHANGE:
       const { field, value } = action;
       return handleFormFieldChange(state, field, value);
 
-    case loginTypes.REQUEST_LOGIN:
+    case loginTypes.FORM_REQUEST:
       return state.set('isFetching', true);
 
-    case loginTypes.LOGIN_SUCCESS:
+    case loginTypes.FORM_SUCCESS:
       return state.set('isFetching', false);
 
-    case loginTypes.LOGIN_FAILURE:
+    case loginTypes.FORM_FAILURE:
       return state.set('isFetching', false)
                   .setIn(['form', 'error'], action.error);
-    //
-    //   case SET_STATE:
-    //   var form = JSON.parse(action.payload).account.form;
-    //
-    //   var next = state.setIn(['form','state'], form.state)
-    //   .setIn(['form','disabled'], form.disabled)
-    //   .setIn(['form','error'], form.error)
-    //   .setIn(['form','isValid'], form.isValid)
-    //   .setIn(['form','isFetching'], form.isFetching)
-    //   .setIn(['form','fields','email'], form.fields.email)
-    //   .setIn(['form','fields','emailHasError'], form.fields.emailHasError)
-    //   .setIn(['form','fields','apiKey'], form.fields.apiKey)
-    //   .setIn(['form','fields','apiKeyHasError'], form.fields.apiKeyHasError)
-    //
-    //   return next;
-    //
-    // }
 
     default:
       return state;

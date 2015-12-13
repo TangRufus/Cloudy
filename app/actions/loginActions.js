@@ -4,28 +4,28 @@ import AlertableError from '../util/alertableError';
 
 export function onFormFieldChange(field, value) {
   return {
-    type: loginTypes.ON_FORM_FIELD_CHANGE,
+    type: loginTypes.FORM_FIELD_CHANGE,
     field: field,
     value: value
   };
 }
 
-function requestLogin() {
+function formRequest() {
   return {
-    type: loginTypes.REQUEST_LOGIN
+    type: loginTypes.FORM_REQUEST
   };
 }
 
-function loginSuccess(zones) {
+function formSuccess(zones) {
   return {
-    type: loginTypes.LOGIN_SUCCESS,
+    type: loginTypes.FORM_SUCCESS,
     zones: zones
   };
 }
 
-function loginFailure(error) {
+function formFailure(error) {
   return {
-    type: loginTypes.LOGIN_FAILURE,
+    type: loginTypes.FORM_FAILURE,
     error: error
   };
 }
@@ -53,18 +53,18 @@ function getZone(zone) {
   return zone.name;
 }
 
-function handleLoginSuccess(dispatch, result) {
+function handleformSuccess(dispatch, result) {
   const zones = _.map(result, getZone);
-  dispatch(loginSuccess(zones));
+  dispatch(formSuccess(zones));
 }
 
-function handleLoginFailure(dispatch, error) {
-  dispatch(loginFailure(error));
+function handleformFailure(dispatch, error) {
+  dispatch(formFailure(error));
 }
 
 export function onFormSubmit() {
   return (dispatch, getState) => {
-    dispatch(requestLogin());
+    dispatch(formRequest());
 
     const state = getState();
     const { email, apiKey } = state.login.form.fields;
@@ -81,7 +81,7 @@ export function onFormSubmit() {
     return fetch('https://api.cloudflare.com/client/v4/zones', config)
         .then(response => handleLoginResponse(response))
         .then(responseJson => handleApiResponse(responseJson))
-        .then(result => handleLoginSuccess(dispatch, result))
-        .catch(error => handleLoginFailure(dispatch, error));
+        .then(result => handleformSuccess(dispatch, result))
+        .catch(error => handleformFailure(dispatch, error));
   };
 }
