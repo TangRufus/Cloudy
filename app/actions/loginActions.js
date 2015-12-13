@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import axios from 'axios';
 import loginTypes from '../constants/loginTypes';
 import AlertableError from '../util/alertableError';
 
@@ -17,6 +18,7 @@ function formRequest() {
 }
 
 function formSuccess(zones) {
+  console.log('zones:', zones);
   return {
     type: loginTypes.FORM_SUCCESS,
     zones: zones
@@ -31,22 +33,7 @@ function formFailure(error) {
 }
 
 function handleLoginResponse(response) {
-  if (response.status !== 200) {
-    const DEFAULT_ERROR_MSG = 'Wrong email address and API key combination. Please try again.';
-    const errorMsg = response.statusText || DEFAULT_ERROR_MSG;
-    const error = new AlertableError(errorMsg);
-    return Promise.reject(error);
-  }
-
-  return response.json();
-}
-
-function handleApiResponse(responseJson) {
-  if (responseJson.success) {
-    return responseJson.result;
-  }
-
-  return Promise.reject(new Error(responseJson.messages));
+  return response.data.result;
 }
 
 function getZone(zone) {
@@ -59,7 +46,10 @@ function handleformSuccess(dispatch, result) {
 }
 
 function handleformFailure(dispatch, error) {
-  dispatch(formFailure(error));
+  const DEFAULT_ERROR_MSG = 'Wrong email address and API key combination. Please try again.';
+  const errorMsg = error.statusText || DEFAULT_ERROR_MSG;
+  const alertableError = new AlertableError(errorMsg);
+  dispatch(formFailure(alertableError));
 }
 
 export function onFormSubmit() {
@@ -78,9 +68,8 @@ export function onFormSubmit() {
     };
 
     // @TODO: Handle timeout
-    return fetch('https://api.cloudflare.com/client/v4/zones', config)
+    return axios.get('https://api.cloudflare.com/client/v4/zones', config)
         .then(response => handleLoginResponse(response))
-        .then(responseJson => handleApiResponse(responseJson))
         .then(result => handleformSuccess(dispatch, result))
         .catch(error => handleformFailure(dispatch, error));
   };

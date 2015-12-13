@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "apsl-react-native-button": "^2.3.0",
+    "axios": "^0.8.0",
     "immutable": "^3.7.5",
     "keymirror": "^0.1.1",
     "lodash": "^3.10.1",
