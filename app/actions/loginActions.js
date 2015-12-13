@@ -42,7 +42,7 @@ function handleformSuccess(dispatch, result) {
 
 function handleformFailure(dispatch, error) {
   const DEFAULT_ERROR_MSG = 'Wrong email address and API key combination. Please try again.';
-  const errorMsg = error.statusText || DEFAULT_ERROR_MSG;
+  const errorMsg = _.isString(error.data) ? error.data : (error.statusText || DEFAULT_ERROR_MSG);
   const alertableError = new AlertableError(errorMsg);
   dispatch(formFailure(alertableError));
 }
