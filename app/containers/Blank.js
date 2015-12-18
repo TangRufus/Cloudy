@@ -1,10 +1,14 @@
 import React, {
   Component,
   Text,
+  PropTypes,
   StyleSheet,
   View
 } from 'react-native';
-import Drawer from 'react-native-drawer';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux/native';
+import * as menuActions from '../actions/menuActions';
+import SideMenu from 'react-native-side-menu';
 import Menu from './Menu';
 
 const styles = StyleSheet.create({
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
+    paddingTop: 64,
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
     shadowRadius: 3,
@@ -61,38 +65,38 @@ const styles = StyleSheet.create({
   }
 });
 
-// @TODO: Remove before release
-export default class Blank extends Component {
-  closeControlPanel() {
-    console.log('props: ', this.props);
-    console.log('state: ', this.state);
-    this.refs.drawer.close();
-  }
+function mapStateToProps(state) {
+  return { isOpen: state.menu.isOpen };
+}
 
-  openControlPanel() {
-    console.log('props: ', this.props);
-    console.log('state: ', this.state);
-    this.refs.drawer.open();
-  }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(menuActions, dispatch);
+}
+
+// @TODO: Remove before release
+class Blank extends Component {
+  static propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    open: PropTypes.func.isRequired,
+    close: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired
+  };
 
   render() {
-    console.log('refs', this.refs);
     return (
-      <Drawer
-        ref="drawer"
-        type="static"
-        acceptPan={false}
-        tapToClose
-        openDrawerOffset={100}
-        styles={{ drawer: { backgroundColor: 'red' }, main: { shadowColor: '#000000', shadowOpacity: 0.4, shadowRadius: 3 } }}
-        content={<Menu />}
+      <SideMenu
+        menu={<Menu />}
+        isOpen={this.props.isOpen}
+        onChange={(e) => { this.props.onChange(e); }}
+        disableGestures
+        touchToClose
         >
 
         <View style={styles.container}>
-          <Text style={styles.welcome} onPress={this.openControlPanel.bind(this)}>
+          <Text style={styles.welcome} onPress={this.props.open}>
             open open open open open open open open open
           </Text>
-          <Text style={styles.welcome} onPress={this.closeControlPanel.bind(this)}>
+          <Text style={styles.welcome} onPress={this.props.close}>
             close close close close close close close close
           </Text>
           <Text style={styles.instructions}>
@@ -100,7 +104,9 @@ export default class Blank extends Component {
             Cmd+Control+Z for dev menu
           </Text>
         </View>
-      </Drawer>
+      </SideMenu>
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Blank);
