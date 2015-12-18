@@ -101,7 +101,7 @@ export default class LoginFormContainer extends Component {
     // @TODO: Show spiner in status bar if fetching
 
     return (
-      <View style={{ paddingTop: 64 }}>
+      <View>
         <OnChangeForm
           error={error}
           formType={formType}

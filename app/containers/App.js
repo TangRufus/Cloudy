@@ -2,16 +2,13 @@ import React, {
   Component,
   PropTypes
 } from 'react-native';
-import { Router, Route } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
 import * as menuActions from '../actions/menuActions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SideMenu from 'react-native-side-menu';
 import Menu from './Menu';
-import Launch from './Launch';
-import Login from './Login';
-import Blank from './Blank';
+import AppRouter from './AppRouter';
 
 
 function mapStateToProps(state) {
@@ -61,20 +58,7 @@ export default class App extends Component {
         touchToClose
         >
 
-        <Router hideNavBar>
-          <Route initial name="launch" component={Launch} title="Launch"/>
-          <Route name="login">
-            <Router>
-              <Route name="loginForm" component={Login} title="Login"/>
-            </Router>
-          </Route>
-
-          <Route name="blank">
-            <Router>
-              <Route name="blank1" renderLeftButton={this.renderLeftButton.bind(this)} component={Blank} title="Blank"/>
-            </Router>
-          </Route>
-        </Router>
+        <AppRouter renderLeftButton={this.renderLeftButton.bind(this)}/>
 
       </SideMenu>
     );
