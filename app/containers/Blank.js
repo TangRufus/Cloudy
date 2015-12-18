@@ -12,39 +12,6 @@ import SideMenu from 'react-native-side-menu';
 import Menu from './Menu';
 
 const styles = StyleSheet.create({
-  menu: {
-    flex: 1,
-    width: window.width,
-    height: window.height,
-    backgroundColor: 'white',
-    padding: 20
-  },
-  button: {
-    position: 'absolute',
-    bottom: 50,
-    backgroundColor: 'red',
-    borderRadius: 20
-  },
-  caption: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    alignItems: 'center'
-  },
-  avatarContainer: {
-    marginBottom: 20,
-    marginTop: 20
-  },
-  avatar: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    flex: 1
-  },
-  item: {
-    fontSize: 14,
-    fontWeight: '300',
-    paddingTop: 5
-  },
   container: {
     flex: 1,
     paddingTop: 64,
@@ -53,15 +20,10 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     shadowOpacity: 1
   },
-  welcome: {
+  instructions: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
   }
 });
 
@@ -93,12 +55,6 @@ class Blank extends Component {
         >
 
         <View style={styles.container}>
-          <Text style={styles.welcome} onPress={this.props.open}>
-            open open open open open open open open open
-          </Text>
-          <Text style={styles.welcome} onPress={this.props.close}>
-            close close close close close close close close
-          </Text>
           <Text style={styles.instructions}>
             Press Cmd+R to reload,{'\n'}
             Cmd+Control+Z for dev menu

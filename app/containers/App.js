@@ -1,7 +1,6 @@
 import React, {
   Component,
-  PropTypes,
-  Text
+  PropTypes
 } from 'react-native';
 import { Router, Route } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux';
@@ -11,6 +10,7 @@ import Login from './Login';
 import Launch from './Launch';
 // @TODO: Remove before release
 import Blank from './Blank';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(menuActions, dispatch);
@@ -23,7 +23,14 @@ export default class App extends Component {
 
   renderLeftButton() {
     return (
-      <Text onPress={this.props.toggle}>hihihihi ihihi hihih</Text>
+      <Icon.Button
+        name="align-justify"
+        backgroundColor="transparent"
+        iconStyle={{ marginRight: 0, borderWidth: 0 }}
+        borderRadius={0}
+        size={35}
+        color="white"
+        onPress={this.props.toggle} />
     );
   }
 
@@ -39,9 +46,9 @@ export default class App extends Component {
         </Route>
 
         <Route name="blank">
-            <Router>
-              <Route name="blank1" renderLeftButton={this.renderLeftButton.bind(this)} component={Blank} title="Blank"/>
-            </Router>
+          <Router>
+            <Route name="blank1" renderLeftButton={this.renderLeftButton.bind(this)} component={Blank} title="Blank"/>
+          </Router>
         </Route>
       </Router>
     );
