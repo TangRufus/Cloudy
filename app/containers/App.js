@@ -20,11 +20,16 @@ export default class App extends Component {
     return (
       <Router hideNavBar>
         <Route initial name="launch" component={Launch} title="Launch"/>
-        <Route name="blank" component={Blank} title="Blank"/>
         <Route name="login">
           <Router sceneStyle={styles.scene}>
             <Route name="loginForm" component={Login} title="Login"/>
           </Router>
+        </Route>
+
+        <Route name="blank">
+            <Router sceneStyle={styles.scene} hideNavBar>
+              <Route name="blank1" component={Blank} title="Blank"/>
+            </Router>
         </Route>
       </Router>
     );
