@@ -6,22 +6,35 @@ import { Router, Route } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
 import * as menuActions from '../actions/menuActions';
-import Login from './Login';
-import Launch from './Launch';
-// @TODO: Remove before release
-import Blank from './Blank';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SideMenu from 'react-native-side-menu';
+import Menu from './Menu';
+import Launch from './Launch';
+import Login from './Login';
+import Blank from './Blank';
+
+
+function mapStateToProps(state) {
+  return { menu: state.menu };
+}
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(menuActions, dispatch);
+  return { menuActions: bindActionCreators(menuActions, dispatch) };
 }
 
 export default class App extends Component {
   static propTypes = {
-    toggle: PropTypes.func.isRequired
+    menu: PropTypes.shape({
+      isOpen: PropTypes.bool.isRequired
+    }).isRequired,
+    menuActions: PropTypes.shape({
+      onChange: PropTypes.func.isRequired,
+      toggle: PropTypes.func.isRequired
+    }).isRequired
   };
 
   renderLeftButton() {
+    const { toggle } = this.props.menuActions;
     return (
       <Icon.Button
         name="align-justify"
@@ -30,29 +43,42 @@ export default class App extends Component {
         borderRadius={0}
         size={35}
         color="white"
-        onPress={this.props.toggle} />
+        onPress={toggle} />
     );
   }
 
   // @TODO: Add schemas
   render() {
-    return (
-      <Router hideNavBar>
-        <Route initial name="launch" component={Launch} title="Launch"/>
-        <Route name="login">
-          <Router>
-            <Route name="loginForm" component={Login} title="Login"/>
-          </Router>
-        </Route>
+    const { isOpen } = this.props.menu;
+    const { onChange } = this.props.menuActions;
 
-        <Route name="blank">
-          <Router>
-            <Route name="blank1" renderLeftButton={this.renderLeftButton.bind(this)} component={Blank} title="Blank"/>
-          </Router>
-        </Route>
-      </Router>
+    return (
+      <SideMenu
+        menu={<Menu />}
+        isOpen={isOpen}
+        onChange={onChange}
+        disableGestures
+        touchToClose
+        >
+
+        <Router hideNavBar>
+          <Route initial name="launch" component={Launch} title="Launch"/>
+          <Route name="login">
+            <Router>
+              <Route name="loginForm" component={Login} title="Login"/>
+            </Router>
+          </Route>
+
+          <Route name="blank">
+            <Router>
+              <Route name="blank1" renderLeftButton={this.renderLeftButton.bind(this)} component={Blank} title="Blank"/>
+            </Router>
+          </Route>
+        </Router>
+
+      </SideMenu>
     );
   }
 }
 
-export default connect(state => state, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
