@@ -27,7 +27,7 @@ export default class OnChangeForm extends Component {
             options={options}
             value={value}
             onChange={onChange}
-            />
+          />
         </View>
       </View>
     );

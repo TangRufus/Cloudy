@@ -108,12 +108,13 @@ export default class LoginFormContainer extends Component {
           options={options}
           value={value}
           onChange={this.onChange.bind(this)}
-          />
+        />
         <FormButton
           isDisabled={isButtonDisabled}
           isLoading={isButtonLoading}
           onPress={this.onSubmit.bind(this)}
-          buttonText={buttonText}/>
+          buttonText={buttonText}
+        />
       </View>
     );
   }

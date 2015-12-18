@@ -40,7 +40,8 @@ export default class App extends Component {
         borderRadius={0}
         size={35}
         color="white"
-        onPress={toggle} />
+        onPress={toggle}
+      />
     );
   }
 
@@ -56,7 +57,7 @@ export default class App extends Component {
         onChange={onChange}
         disableGestures
         touchToClose
-        >
+      >
 
         <AppRouter renderLeftButton={this.renderLeftButton.bind(this)}/>
 

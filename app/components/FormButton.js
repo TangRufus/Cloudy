@@ -36,7 +36,7 @@ export default class FormButton extends Component {
           isDisabled={isDisabled}
           isLoading={isLoading}
           onPress={onPress}
-          >
+        >
           {buttonText}
         </Button>
       </View>

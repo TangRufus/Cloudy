@@ -15,7 +15,7 @@ export function close() {
 export function onChange(isOpen) {
   return {
     type: menuTypes.ON_CHANGE,
-    isOpen: isOpen
+    isOpen
   };
 }
 

@@ -6,8 +6,8 @@ import AxiosCloudflare from '../util/axiosCloudflare';
 export function onFormFieldChange(field, value) {
   return {
     type: loginTypes.FORM_FIELD_CHANGE,
-    field: field,
-    value: value
+    field,
+    value
   };
 }
 
@@ -20,14 +20,14 @@ function formRequest() {
 function formSuccess(zones) {
   return {
     type: loginTypes.FORM_SUCCESS,
-    zones: zones
+    zones
   };
 }
 
 function formFailure(error) {
   return {
     type: loginTypes.FORM_FAILURE,
-    error: error
+    error
   };
 }
 
