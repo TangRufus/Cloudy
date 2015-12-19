@@ -24,7 +24,8 @@ export default function loginReducer(state = initialState, action) {
                   .setIn(['form', 'error'], null);
 
     case loginTypes.FORM_SUCCESS:
-      return state.set('isFetching', false);
+      return state.set('isFetching', false)
+                  .set('status', loginTypes.LOGGED_IN);
 
     case loginTypes.FORM_FAILURE:
       return state.set('isFetching', false)

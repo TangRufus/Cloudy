@@ -2,6 +2,8 @@ import _ from 'lodash';
 import loginTypes from '../constants/loginTypes';
 import AlertableError from '../util/alertableError';
 import AxiosCloudflare from '../util/axiosCloudflare';
+import { Actions } from 'react-native-router-flux';
+import * as zonesActions from './zonesActions';
 
 export function onFormFieldChange(field, value) {
   return {
@@ -17,10 +19,9 @@ function formRequest() {
   };
 }
 
-function formSuccess(zones) {
+function formSuccess() {
   return {
-    type: loginTypes.FORM_SUCCESS,
-    zones
+    type: loginTypes.FORM_SUCCESS
   };
 }
 
@@ -31,13 +32,10 @@ function formFailure(error) {
   };
 }
 
-function getZone(zone) {
-  return zone.name;
-}
-
-function handleformSuccess(dispatch, result) {
-  const zones = _.map(result, getZone);
-  dispatch(formSuccess(zones));
+function handleformSuccess(dispatch, data) {
+  dispatch(zonesActions.fetchZonesSuccess(data));
+  dispatch(formSuccess());
+  Actions.blank();
 }
 
 function handleformFailure(dispatch, error) {
@@ -56,7 +54,7 @@ export function onFormSubmit() {
     const axiosCloudflare = new AxiosCloudflare(email, apiKey);
 
     return axiosCloudflare.zones()
-                          .then(result => handleformSuccess(dispatch, result))
+                          .then(data => handleformSuccess(dispatch, data))
                           .catch(error => handleformFailure(dispatch, error));
   };
 }

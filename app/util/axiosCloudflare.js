@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 
 axios.interceptors.response.use(
-  (response) => { return response.data.result; }
+  (response) => { return response.data; }
 );
 
 export default class AxiosCloudflare {
