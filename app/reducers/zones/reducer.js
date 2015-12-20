@@ -1,23 +1,15 @@
-// import { Map } from 'immutable';
-import { normalize, Schema, arrayOf } from 'normalizr';
+import merge from 'lodash/object/merge';
+import { normalize, arrayOf } from 'normalizr';
 import zonesTypes from '../../constants/zonesTypes';
+import { zoneSchema } from '../../constants/schemas';
 
-// const InitialState = new Map();
-// const initialState = new InitialState;
+const initialState = {};
 
-
-const zone = new Schema('zones');
-
-export default function zonesReducer(state = null, action) {
-  // if (!(state instanceof InitialState)) return initialState.mergeDeep(state);
-
+export default function zonesReducer(state = initialState, action) {
   switch (action.type) {
     case zonesTypes.FETCH_ZONES_SUCCESS:
-      console.log('in fetch');
-      const nor = normalize(action.data, { result: arrayOf(zone) });
-      console.log('nor', nor);
-
-      return state;
+      const normalizedZones = normalize(action.data, { result: arrayOf(zoneSchema) });
+      return merge({}, state, normalizedZones.entities.zones);
 
     default:
       return state;

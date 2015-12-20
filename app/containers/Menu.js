@@ -1,26 +1,33 @@
+import _ from 'lodash';
 import React, {
   Component,
+  PropTypes,
   Text,
   View
 } from 'react-native';
+import { connect } from 'react-redux/native';
 
-export default class Menu extends Component {
+
+function mapStateToProps(state) {
+  return { zones: state.zones };
+}
+
+class Menu extends Component {
+  static propTypes = {
+    zones: PropTypes.oneOfType([
+      React.PropTypes.array.isRequired,
+      React.PropTypes.object.isRequired
+    ]).isRequired
+  };
+
+  // @TODO: Render list view instead
   render() {
     return (
       <View>
-        <Text>1. i am menu</Text>
-        <Text>2. i am menu</Text>
-        <Text>3. i am menu</Text>
-        <Text>4. i am menu</Text>
-        <Text>5. i am menu</Text>
-        <Text>6. i am menu</Text>
-        <Text>7. i am menu</Text>
-        <Text>8. i am menu</Text>
-        <Text>9. i am menu</Text>
-        <Text>10. i am menu</Text>
-        <Text>11. i am menu</Text>
-        <Text>12. i am menu</Text>
+        { _.map(this.props.zones, (zone) => { return <Text>{zone.name}</Text>; }) }
       </View>
     );
   }
 }
+
+export default connect(mapStateToProps)(Menu);
