@@ -56,7 +56,6 @@ export default class App extends Component {
         isOpen={isOpen}
         onChange={onChange}
         disableGestures
-        touchToClose
       >
 
         <AppRouter renderLeftButton={this.renderLeftButton.bind(this)}/>
