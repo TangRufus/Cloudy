@@ -26,6 +26,13 @@ export default class FormButton extends Component {
     buttonText: PropTypes.string.isRequired
   };
 
+  shouldComponentUpdate(nextProps) {
+    // @TODO: Check for onPress
+    return this.props.isDisabled !== nextProps.isDisabled ||
+           this.props.isLoading !== nextProps.isLoading ||
+           this.props.buttonText !== nextProps.buttonText;
+  }
+
   render() {
     const { isDisabled, isLoading, onPress, buttonText } = this.props;
 
